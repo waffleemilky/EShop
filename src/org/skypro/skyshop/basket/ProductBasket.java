@@ -31,18 +31,24 @@ public class ProductBasket {
             return;
         }
 
+        int specialProductCount = 0;
+
         for (int i = 0; i < productCount; i++) {
             Product product = products[i];
-            System.out.println(product.getNameProduct() + ": " + product.getPriceProduct());
+            System.out.println(product.toString());
+            if (product.isSpecial()) {
+                specialProductCount++;
+            }
         }
 
         System.out.println("Итого: " + getSumBasket());
+        System.out.println("Специальных товаров: " + specialProductCount);
     }
 
     public boolean containsProductByName(String productName) {
         for (int i = 0; i < productCount; i++) {
             if (products[i].getNameProduct().equals(productName)) {
-                return true; // Продукт найден
+                return true;
             }
         }
         return false;
