@@ -33,5 +33,4 @@ public class SearchEngine {
             System.out.println("Превышено максимальное количество элементов для поиска.");
         }
     }
-
 }

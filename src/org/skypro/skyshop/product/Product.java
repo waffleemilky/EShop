@@ -31,5 +31,4 @@ public abstract class Product implements Searchable {
     public String getName() {
         return getNameProduct();
     }
-
 }
