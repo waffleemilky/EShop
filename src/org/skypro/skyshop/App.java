@@ -1,12 +1,25 @@
 package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
+import org.skypro.skyshop.info.Article;
+import org.skypro.skyshop.info.SearchEngine;
+import org.skypro.skyshop.info.Searchable;
 import org.skypro.skyshop.product.DiscountedProduct;
 import org.skypro.skyshop.product.FixPriceProduct;
 import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 
 public class App {
+    private static void printSearchResults(Searchable[] results) {
+        for (Searchable result : results) {
+            if (result != null) {
+                System.out.println(result.getStringRepresentation());
+            } else {
+                System.out.println("null");
+            }
+        }
+    }
+
     public static void main(String[] args) {
 
         ProductBasket basket = new ProductBasket();
@@ -67,6 +80,44 @@ public class App {
         } else {
             System.out.println("Товар '" + productName + "' не найден в корзине.");
         }
+
+        System.out.println("\n11. Поисковой Движок");
+        SearchEngine searchEngine = new SearchEngine(8);
+
+        Article appleArticle = new Article("Яблоки: польза и вред", "В этой статье мы расскажем о пользе и вреде яблок.");
+        Article milkArticle = new Article("Как выбрать молоко", "Советы по выбору качественного молока.");
+        Article bakingArticle = new Article("Рецепт домашнего хлеба", "Простой рецепт вкусного домашнего хлеба.");
+
+        searchEngine.add(apple);
+        searchEngine.add(milk);
+        searchEngine.add(bread);
+        searchEngine.add(banana);
+        searchEngine.add(orange);
+
+        searchEngine.add(appleArticle);
+        searchEngine.add(milkArticle);
+        searchEngine.add(bakingArticle);
+
+        System.out.println("--- Поиск по запросу 'Яблоко' ---");
+        Searchable[] results1 = searchEngine.search("Яблоко");
+        printSearchResults(results1);
+
+        System.out.println("\n--- Поиск по запросу 'Молоко' ---");
+        Searchable[] results2 = searchEngine.search("Молоко");
+        printSearchResults(results2);
+
+        System.out.println("\n--- Поиск по запросу 'Хлеб' ---");
+        Searchable[] results3 = searchEngine.search("Хлеб");
+        printSearchResults(results3);
+
+        System.out.println("\n--- Поиск по запросу 'Статья' (не найдет ничего, т.к. ищем по термину поиска)---");
+        Searchable[] results4 = searchEngine.search("Статья");
+        printSearchResults(results4);
+
+        System.out.println("\n--- Поиск по запросу 'вкусно' (по тексту статьи)---");
+        Searchable[] results5 = searchEngine.search("вкусно");
+        printSearchResults(results5);
+
 
     }
 }
