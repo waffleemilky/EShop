@@ -2,6 +2,7 @@ package org.skypro.skyshop;
 
 import org.skypro.skyshop.basket.ProductBasket;
 import org.skypro.skyshop.info.Article;
+import org.skypro.skyshop.info.BestResultNotFound;
 import org.skypro.skyshop.info.SearchEngine;
 import org.skypro.skyshop.info.Searchable;
 import org.skypro.skyshop.product.DiscountedProduct;
@@ -118,6 +119,58 @@ public class App {
         Searchable[] results5 = searchEngine.search("вкусно");
         printSearchResults(results5);
 
+        System.out.println("Демонстрация обработки исключений");
+
+        // Проверка названия продукта (Product)
+        try {
+            Product invalidNameProduct = new SimpleProduct("", 50); // Пустое имя
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка создания продукта (пустое имя): " + e.getMessage());
+        }
+
+        try {
+            Product invalidNameProduct2 = new SimpleProduct(null, 50); // Null имя
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка создания продукта (null имя): " + e.getMessage());
+        }
+
+        // Проверка цены продукта (SimpleProduct)
+        try {
+            SimpleProduct invalidPriceProduct = new SimpleProduct("Апельсин", 0); // Нулевая цена
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка создания продукта (нулевая цена): " + e.getMessage());
+        }
+
+        // Проверка базовой цены и скидки (DiscountedProduct)
+        try {
+            DiscountedProduct invalidBasePriceProduct = new DiscountedProduct("Молоко", 0, 15); // Нулевая базовая цена
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка создания продукта (нулевая базовая цена): " + e.getMessage());
+        }
+
+        try {
+            DiscountedProduct invalidDiscountProduct = new DiscountedProduct("Банан", 60, 120); // Неверный процент скидки
+        } catch (IllegalArgumentException e) {
+            System.err.println("Ошибка создания продукта (неверный процент скидки): " + e.getMessage());
+        }
+
+        // Сценарий 1: Объект существует
+        String searchQuery1 = "Яблоко";
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch(searchQuery1);
+            System.out.println("Наилучший результат для запроса '" + searchQuery1 + "': " + bestMatch.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.err.println("Ошибка поиска (объект найден): " + e.getMessage());
+        }
+
+        // Сценарий 2: Метод выбрасывает исключение
+        String searchQuery2 = "Несуществующий запрос";
+        try {
+            Searchable bestMatch = searchEngine.findBestMatch(searchQuery2);
+            System.out.println("Наилучший результат для запроса '" + searchQuery2 + "': " + bestMatch.getStringRepresentation());
+        } catch (BestResultNotFound e) {
+            System.err.println("Ошибка поиска (объект не найден): " + e.getMessage());
+        }
 
     }
 }
