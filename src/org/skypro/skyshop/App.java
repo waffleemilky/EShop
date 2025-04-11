@@ -11,14 +11,17 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.List;
+import java.util.Map;
+import java.util.SortedMap;
 
 public class App {
-    private static void printSearchResults(List<Searchable> results) {
+
+    private static void printSearchResults(SortedMap<String, Searchable> results) {
         if (results.isEmpty()) {
             System.out.println("Ничего не найдено.");
         } else {
-            for (Searchable result : results) {
-                System.out.println(result.getStringRepresentation());
+            for (Map.Entry<String, Searchable> entry : results.entrySet()) {
+                System.out.println(entry.getValue().getStringRepresentation());
             }
         }
     }
@@ -103,24 +106,28 @@ public class App {
         searchEngine.add(bakingArticle);
 
         System.out.println("--- Поиск по запросу 'Яблоко' ---");
-        List<Searchable> results1 = searchEngine.search("Яблоко");
+        SortedMap<String, Searchable> results1 = searchEngine.search("Яблоко");
         printSearchResults(results1);
 
         System.out.println("\n--- Поиск по запросу 'Молоко' ---");
-        List<Searchable> results2 = searchEngine.search("Молоко");
+        SortedMap<String, Searchable> results2 = searchEngine.search("Молоко");
         printSearchResults(results2);
 
         System.out.println("\n--- Поиск по запросу 'Хлеб' ---");
-        List<Searchable> results3 = searchEngine.search("Хлеб");
+        SortedMap<String, Searchable> results3 = searchEngine.search("Хлеб");
         printSearchResults(results3);
 
         System.out.println("\n--- Поиск по запросу 'Статья' (не найдет ничего, т.к. ищем по термину поиска)---");
-        List<Searchable> results4 = searchEngine.search("Статья");
+        SortedMap<String, Searchable> results4 = searchEngine.search("Статья");
         printSearchResults(results4);
 
-        System.out.println("\n--- Поиск по запросу 'вкусно' (по тексту статьи)---");
-        List<Searchable> results5 = searchEngine.search("вкусно");
+        System.out.println("\n--- Поиск по запросу 'пользе' (по тексту статьи)---");
+        SortedMap<String, Searchable> results5 = searchEngine.search("пользе");
         printSearchResults(results5);
+
+        System.out.println("\n--- Поиск по запросу 'рецепт' (по тексту статьи)---");
+        SortedMap<String, Searchable> results6 = searchEngine.search("рецепт");
+        printSearchResults(results6);
 
         System.out.println("Демонстрация обработки исключений");
 
@@ -215,7 +222,6 @@ public class App {
 
         System.out.println("\n5. Содержимое корзины после попытки удаления несуществующего продукта:");
         basket.printBasket();
-
 
     }
 }
