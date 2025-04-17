@@ -12,11 +12,10 @@ import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.List;
 import java.util.Map;
-import java.util.SortedMap;
 
 public class App {
 
-    private static void printSearchResults(SortedMap<String, Searchable> results) {
+    private static void printSearchResults(Map<String, Searchable> results) {
         if (results.isEmpty()) {
             System.out.println("Ничего не найдено.");
         } else {
@@ -106,27 +105,27 @@ public class App {
         searchEngine.add(bakingArticle);
 
         System.out.println("--- Поиск по запросу 'Яблоко' ---");
-        SortedMap<String, Searchable> results1 = searchEngine.search("Яблоко");
+        Map<String, Searchable> results1 = searchEngine.search("Яблоко");
         printSearchResults(results1);
 
         System.out.println("\n--- Поиск по запросу 'Молоко' ---");
-        SortedMap<String, Searchable> results2 = searchEngine.search("Молоко");
+        Map<String, Searchable> results2 = searchEngine.search("Молоко");
         printSearchResults(results2);
 
         System.out.println("\n--- Поиск по запросу 'Хлеб' ---");
-        SortedMap<String, Searchable> results3 = searchEngine.search("Хлеб");
+        Map<String, Searchable> results3 = searchEngine.search("Хлеб");
         printSearchResults(results3);
 
         System.out.println("\n--- Поиск по запросу 'Статья' (не найдет ничего, т.к. ищем по термину поиска)---");
-        SortedMap<String, Searchable> results4 = searchEngine.search("Статья");
+        Map<String, Searchable> results4 = searchEngine.search("Статья");
         printSearchResults(results4);
 
         System.out.println("\n--- Поиск по запросу 'пользе' (по тексту статьи)---");
-        SortedMap<String, Searchable> results5 = searchEngine.search("пользе");
+        Map<String, Searchable> results5 = searchEngine.search("пользе");
         printSearchResults(results5);
 
         System.out.println("\n--- Поиск по запросу 'рецепт' (по тексту статьи)---");
-        SortedMap<String, Searchable> results6 = searchEngine.search("рецепт");
+        Map<String, Searchable> results6 = searchEngine.search("рецепт");
         printSearchResults(results6);
 
         System.out.println("Демонстрация обработки исключений");

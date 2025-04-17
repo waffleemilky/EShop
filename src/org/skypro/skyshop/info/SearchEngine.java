@@ -1,9 +1,6 @@
 package org.skypro.skyshop.info;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class SearchEngine {
     private final List<Searchable> searchables = new ArrayList<>();
@@ -11,8 +8,8 @@ public class SearchEngine {
     public SearchEngine() {
     }
 
-    public SortedMap<String, Searchable> search(String query) {
-        SortedMap<String, Searchable> results = new TreeMap<>();
+    public Map<String, Searchable> search(String query) {
+        Map<String, Searchable> results = new TreeMap<>();
 
         for (Searchable searchable : searchables) {
             if (searchable != null && searchable.getSearchTerm().toLowerCase().contains(query.toLowerCase())) {
