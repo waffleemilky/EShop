@@ -54,7 +54,7 @@ public class ProductBasket {
     public List<Product> removeProductsByName(String name) {
         List<Product> removedProducts = products.remove(name);
         if (removedProducts == null) {
-            return new ArrayList<>(); // Возвращаем пустой список, если продукта нет
+            return new ArrayList<>();
         }
         return removedProducts;
     }

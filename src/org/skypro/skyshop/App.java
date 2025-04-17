@@ -11,16 +11,16 @@ import org.skypro.skyshop.product.Product;
 import org.skypro.skyshop.product.SimpleProduct;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
 public class App {
 
-    private static void printSearchResults(Map<String, Searchable> results) {
+    private static void printSearchResults(Set<Searchable> results) { // Изменили на Set
         if (results.isEmpty()) {
             System.out.println("Ничего не найдено.");
         } else {
-            for (Map.Entry<String, Searchable> entry : results.entrySet()) {
-                System.out.println(entry.getValue().getStringRepresentation());
+            for (Searchable result : results) { // Теперь перебираем Set
+                System.out.println(result.getStringRepresentation()); // Используем getStringRepresentation() для вывода
             }
         }
     }
@@ -105,28 +105,31 @@ public class App {
         searchEngine.add(bakingArticle);
 
         System.out.println("--- Поиск по запросу 'Яблоко' ---");
-        Map<String, Searchable> results1 = searchEngine.search("Яблоко");
+        Set<Searchable> results1 = searchEngine.search("Яблоко");
         printSearchResults(results1);
 
         System.out.println("\n--- Поиск по запросу 'Молоко' ---");
-        Map<String, Searchable> results2 = searchEngine.search("Молоко");
+        Set<Searchable> results2 = searchEngine.search("Молоко");
         printSearchResults(results2);
 
         System.out.println("\n--- Поиск по запросу 'Хлеб' ---");
-        Map<String, Searchable> results3 = searchEngine.search("Хлеб");
+        Set<Searchable> results3 = searchEngine.search("Хлеб");
         printSearchResults(results3);
 
         System.out.println("\n--- Поиск по запросу 'Статья' (не найдет ничего, т.к. ищем по термину поиска)---");
-        Map<String, Searchable> results4 = searchEngine.search("Статья");
+        Set<Searchable> results4 = searchEngine.search("Статья");
         printSearchResults(results4);
 
         System.out.println("\n--- Поиск по запросу 'пользе' (по тексту статьи)---");
-        Map<String, Searchable> results5 = searchEngine.search("пользе");
+        Set<Searchable> results5 = searchEngine.search("пользе");
         printSearchResults(results5);
 
         System.out.println("\n--- Поиск по запросу 'рецепт' (по тексту статьи)---");
-        Map<String, Searchable> results6 = searchEngine.search("рецепт");
+        Set<Searchable> results6 = searchEngine.search("рецепт");
         printSearchResults(results6);
+
+        Set<Searchable> results = searchEngine.search("");
+        printSearchResults(results);
 
         System.out.println("Демонстрация обработки исключений");
 
