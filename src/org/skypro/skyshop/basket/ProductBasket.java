@@ -19,13 +19,10 @@ public class ProductBasket {
     }
 
     public int getSumBasket() {
-        int sum = 0;
-        for (List<Product> productList : products.values()) {
-            for (Product product : productList) {
-                sum += product.getPriceProduct();
-            }
-        }
-        return sum;
+        return products.values().stream()
+                .flatMap(List::stream)       // "Разворачиваем" List<Product> в Stream<Product>
+                .mapToInt(Product::getPriceProduct) // Преобразуем в IntStream
+                .sum();                      // Суммируем
     }
 
     public boolean containsProductByName(String name) {
@@ -37,18 +34,18 @@ public class ProductBasket {
     }
 
     public void printBasket() {
-        if (products.isEmpty()) {
-            System.out.println("Корзина пуста.");
-        } else {
-            System.out.println("Содержимое корзины:");
-            for (Map.Entry<String, List<Product>> entry : products.entrySet()) {
-                String name = entry.getKey();
-                List<Product> productList = entry.getValue();
-                for (Product product : productList) {
-                    System.out.println("- " + product.toString());
-                }
-            }
-        }
+        products.values().stream()
+                .flatMap(List::stream)
+                .forEach(System.out::println); // Печатаем все продукты
+
+        System.out.println("Special products: " + getSpecialCount());
+    }
+
+    private long getSpecialCount() {
+        return products.values().stream()
+                .flatMap(List::stream)
+                .filter(Product::isSpecial)
+                .count();
     }
 
     public List<Product> removeProductsByName(String name) {
